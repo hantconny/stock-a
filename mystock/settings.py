@@ -5,6 +5,8 @@ DUMP_DIR = '/home/rhino/s/a'
 if not os.path.exists(DUMP_DIR):
     os.makedirs(DUMP_DIR)
 
+PLOT = False
+
 # 2001年科技股泡沫破裂&国有股坚持
 # 2008年次贷危机：
 # 2015年杠杆股灾
@@ -21,14 +23,14 @@ CRASHES = [
 ]
 
 # 回溯开始时间
-START_DATE = "2018-01-01"
+START_DATE = "2024-01-01"
 
 # 证券代码
-STOCK_CODE = "sh.600309"
-STOCK_NAME = "万华化学"
+STOCK_CODE = "sz.002475"
+STOCK_NAME = "立讯精密"
 
 # 目标买入价
-BID_PRICE = 55
+BID_PRICE = 35.36
 
 # 上涨 20% 卖出
 SELL_RATE = 1.2

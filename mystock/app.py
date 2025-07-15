@@ -11,7 +11,7 @@ from loguru import logger
 from matplotlib import pyplot as plt
 
 from mystock.backtrader import get_return
-from mystock.settings import START_DATE, DUMP_DIR, STOCK_CODE, STOCK_NAME
+from mystock.settings import START_DATE, DUMP_DIR, STOCK_CODE, STOCK_NAME, PLOT
 
 matplotlib.rcParams['font.sans-serif'] = ['SimHei']  # 设置中文字体
 matplotlib.rcParams['axes.unicode_minus'] = False  # 正常显示负号
@@ -118,14 +118,15 @@ def get_distribution(stock_code=STOCK_CODE, stock_name=STOCK_NAME):
     get_return(stock_code, stock_name, top_zone.left)
     get_return(stock_code, stock_name, lowest_price)
 
-    # 8. 可视化频次分布
-    freq.plot(kind='bar', figsize=(16, 6))
-    plt.title(f"{stock_code}_{stock_name} 自 {START_DATE} 日股价停留分布")
-    plt.xlabel("价格区间（元）")
-    plt.ylabel("停留天数")
-    plt.grid(True)
-    plt.tight_layout()
-    plt.show()
+    if PLOT:
+        # 8. 可视化频次分布
+        freq.plot(kind='bar', figsize=(16, 6))
+        plt.title(f"{stock_code}_{stock_name} 自 {START_DATE} 日股价停留分布")
+        plt.xlabel("价格区间（元）")
+        plt.ylabel("停留天数")
+        plt.grid(True)
+        plt.tight_layout()
+        plt.show()
 
 
 def get_top_100_companies():
