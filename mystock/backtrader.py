@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from loguru import logger
 
-from mystock.settings import START_DATE, DUMP_DIR
+from mystock.settings import START_DATE, DUMP_DIR, STOCK_CODE, STOCK_NAME, BID_PRICE, SELL_RATE
 
 matplotlib.rcParams['font.sans-serif'] = ['SimHei']  # 设置中文字体
 matplotlib.rcParams['axes.unicode_minus'] = False  # 正常显示负号
@@ -18,16 +18,6 @@ logger.add(os.path.join(DUMP_DIR, '_{time:YYYYMMDD}.log'),
            retention="3 days",
            compression="gz",
            enqueue=True)
-
-# 证券代码
-STOCK_CODE = "sh.601939"
-STOCK_NAME = "建设银行"
-
-# 目标买入价
-BID_PRICE = 7
-
-# 上涨 20% 卖出
-SELL_RATE = 1.2
 
 
 def get_max_drawdown(equity_series):

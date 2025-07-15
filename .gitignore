@@ -1,0 +1,4 @@
+# ignore local test script
+log/
+.idea/
+__pycache__/

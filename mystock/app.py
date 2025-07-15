@@ -11,7 +11,7 @@ from loguru import logger
 from matplotlib import pyplot as plt
 
 from mystock.backtrader import get_return
-from mystock.settings import START_DATE, DUMP_DIR
+from mystock.settings import START_DATE, DUMP_DIR, STOCK_CODE, STOCK_NAME
 
 matplotlib.rcParams['font.sans-serif'] = ['SimHei']  # 设置中文字体
 matplotlib.rcParams['axes.unicode_minus'] = False  # 正常显示负号
@@ -24,7 +24,7 @@ logger.add(os.path.join(DUMP_DIR, '_{time:YYYYMMDD}.log'),
            enqueue=True)
 
 
-def get_k_data(stock_code, stock_name):
+def get_k_data(stock_code=STOCK_CODE, stock_name=STOCK_NAME):
     """
     获取从 2018-01-01 到昨天的历史交易日数据
     :param stock_code: sh.601398
@@ -64,7 +64,7 @@ def get_k_data(stock_code, stock_name):
     # df.to_csv(f"{os.path.join(DUMP_DIR, stock_code)}_{stock_name}.csv")
 
 
-def get_distribution(stock_code, stock_name):
+def get_distribution(stock_code=STOCK_CODE, stock_name=STOCK_NAME):
     # 1. 读取收盘价数据
     df = pd.read_csv(f"{os.path.join(DUMP_DIR, stock_code)}_{stock_name}.csv")
     # 收盘价
@@ -152,16 +152,19 @@ def logout():
 if __name__ == '__main__':
     login()
 
-    cs = get_top_100_companies()
+    # cs = get_top_100_companies()
+    #
+    # for comp in cs:
+    #     cs_code = comp.get('code')
+    #     cs_name = comp.get('name')
+    #     cs_mkt = comp.get('market')
+    #
+    #     get_k_data(f"{cs_mkt}.{cs_code}", cs_name)
+    #     get_distribution(f"{cs_mkt}.{cs_code}", cs_name)
+    #
+    #     time.sleep(10)
 
-    for comp in cs:
-        cs_code = comp.get('code')
-        cs_name = comp.get('name')
-        cs_mkt = comp.get('market')
-
-        get_k_data(f"{cs_mkt}.{cs_code}", cs_name)
-        get_distribution(f"{cs_mkt}.{cs_code}", cs_name)
-
-        time.sleep(10)
+    get_k_data()
+    get_distribution()
 
     logout()
