@@ -10,56 +10,56 @@
     "code": "002475",
     "name": "立讯精密",
     "market": "sz",
-    "hold_price": 0.0,
+    "hold_price": 52.048,
     "sell_price": 0.0
   },
   {
     "code": "600276",
     "name": "恒瑞医药",
     "market": "sh",
-    "hold_price": 0.0,
+    "hold_price": 77.446,
     "sell_price": 0.0
   },
   {
     "code": "600529",
     "name": "山东药玻",
     "market": "sh",
-    "hold_price": 0.0,
+    "hold_price": 54.098,
     "sell_price": 0.0
   },
   {
     "code": "603259",
     "name": "药明康德",
     "market": "sh",
-    "hold_price": 0.0,
+    "hold_price": 71.256,
     "sell_price": 0.0
   },
   {
     "code": "600009",
     "name": "上海机场",
     "market": "sh",
-    "hold_price": 0.0,
+    "hold_price": 77.6814,
     "sell_price": 0.0
   },
   {
     "code": "601318",
     "name": "中国平安",
     "market": "sh",
-    "hold_price": 0.0,
+    "hold_price": 73.4369,
     "sell_price": 0.0
   },
   {
     "code": "601816",
     "name": "京沪高铁",
     "market": "sh",
-    "hold_price": 0.0,
+    "hold_price": 4.7338,
     "sell_price": 0.0
   },
   {
     "code": "600036",
     "name": "招商银行",
     "market": "sh",
-    "hold_price": 0.0,
+    "hold_price": 29.8466,
     "sell_price": 0.0
   }
 ]
