@@ -57,6 +57,7 @@ def get_sell_notify(_stock_code=STOCK_CODE, _stock_name=STOCK_NAME, _hold_price=
         content = (f"{_stock_code}_{_stock_name} 已达到设定的止盈价格"
                    f"\n持仓价格: {_hold_price}"
                    f"\n止盈比例: {(TAKE_PROFIT - 1):.2%}"
+                   f"\n止盈价格: {_hold_price * TAKE_PROFIT}"
                    f"\n当前价格: {close_price}")
 
         send_mail(subject, content)
@@ -101,15 +102,15 @@ if __name__ == '__main__':
         get_sell_notify(f"{hold_mkt}.{hold_code}", hold_name, hold_price)
 
     # 自选买入
-    watchlists = get_watchlist()
+    watchlist = get_watchlist()
 
-    for watchlist in watchlists:
-        watchlist_code = watchlist.get('code')
-        watchlist_name = watchlist.get('name')
-        watchlist_mkt = watchlist.get('market')
-        watchlist_price = watchlist.get('bid_price')
+    for watch in watchlist:
+        watch_code = watch.get('code')
+        watch_name = watch.get('name')
+        watch_mkt = watch.get('market')
+        watch_price = watch.get('bid_price')
 
-        get_k_data(f"{watchlist_mkt}.{watchlist_code}", watchlist_name)
-        get_bid_notify(f"{watchlist_mkt}.{watchlist_code}", watchlist_name, watchlist_price)
+        get_k_data(f"{watch_mkt}.{watch_code}", watch_name)
+        get_bid_notify(f"{watch_mkt}.{watch_code}", watch_name, watch_price)
 
     logout()
