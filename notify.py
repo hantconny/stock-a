@@ -10,9 +10,9 @@ import os.path
 import pandas as pd
 from loguru import logger
 
-from analyze.historical_range import get_k_data, login, logout
+from historical_range import get_k_data, login, logout
 from settings import STOCK_CODE, STOCK_NAME, DUMP_DIR, TAKE_PROFIT
-from util.utils import send_mail, dump_file
+from utils import send_mail, dump_file
 
 # /home/rhino/s/a/notify_YYYY-MM-DD_HH-mm-ss_ssssss.log
 logger.add(os.path.join(DUMP_DIR, 'notify_{time:YYYYMMDD}.log'),
@@ -27,7 +27,7 @@ def get_position():
     读取持仓文件，该文件手动维护，没有自动接口读取当前持仓
     :return:
     """
-    with open('../json/position.json', encoding='utf-8') as f:
+    with open('json/position.json', encoding='utf-8') as f:
         return json.loads(f.read())
 
 
@@ -36,7 +36,7 @@ def get_watchlist():
     读取自选文件，该文件手动维护
     :return:
     """
-    with open('../json/watchlist.json', encoding='utf-8') as f:
+    with open('json/watchlist.json', encoding='utf-8') as f:
         return json.loads(f.read())
 
 

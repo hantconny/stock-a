@@ -20,9 +20,9 @@ import pandas as pd
 from loguru import logger
 from matplotlib import pyplot as plt
 
-from analyze.backtrader import get_return
+from backtrader import get_return
 from settings import START_DATE, DUMP_DIR, STOCK_CODE, STOCK_NAME, PLOT, SAVE_DATA
-from util.utils import clear_file
+from utils import clear_file
 
 matplotlib.rcParams['font.sans-serif'] = ['SimHei']  # 设置中文字体
 matplotlib.rcParams['axes.unicode_minus'] = False  # 正常显示负号
@@ -145,7 +145,7 @@ def get_review_companies():
     读取需要评估的证券信息
     :return:
     """
-    with open('../json/backtrader.json', encoding='utf-8') as f:
+    with open('json/backtrader.json', encoding='utf-8') as f:
         return json.loads(f.read())
 
 
