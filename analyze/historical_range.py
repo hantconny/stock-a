@@ -21,7 +21,8 @@ from loguru import logger
 from matplotlib import pyplot as plt
 
 from analyze.backtrader import get_return
-from settings import START_DATE, DUMP_DIR, STOCK_CODE, STOCK_NAME, PLOT
+from settings import START_DATE, DUMP_DIR, STOCK_CODE, STOCK_NAME, PLOT, SAVE_DATA
+from util.utils import clear_file
 
 matplotlib.rcParams['font.sans-serif'] = ['SimHei']  # 设置中文字体
 matplotlib.rcParams['axes.unicode_minus'] = False  # 正常显示负号
@@ -139,8 +140,12 @@ def get_distribution(stock_code=STOCK_CODE, stock_name=STOCK_NAME):
         plt.show()
 
 
-def get_top_100_companies():
-    with open('../json/top.json', encoding='utf-8') as f:
+def get_review_companies():
+    """
+    读取需要评估的证券信息
+    :return:
+    """
+    with open('../json/backtrader.json', encoding='utf-8') as f:
         return json.loads(f.read())
 
 
@@ -159,11 +164,14 @@ def logout():
     """
     bs.logout()
 
+    if not SAVE_DATA:
+        clear_file()
+
 
 if __name__ == '__main__':
     login()
 
-    cs = get_top_100_companies()
+    cs = get_review_companies()
 
     for comp in cs:
         cs_code = comp.get('code')

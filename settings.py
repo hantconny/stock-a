@@ -5,7 +5,11 @@ DUMP_DIR = '/home/rhino/s/a'
 if not os.path.exists(DUMP_DIR):
     os.makedirs(DUMP_DIR)
 
+# 是否生成图表
 PLOT = False
+
+# 是否留存数据
+SAVE_DATA = False
 
 # 2001年科技股泡沫破裂&国有股坚持
 # 2008年次贷危机：
@@ -23,7 +27,7 @@ CRASHES = [
 ]
 
 # 回溯开始时间
-START_DATE = "2024-01-01"
+START_DATE = "2018-01-01"
 
 # 证券代码
 STOCK_CODE = "sz.002475"

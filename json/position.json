@@ -2,9 +2,64 @@
   {
     "code": "600309",
     "name": "万华化学",
-    "total_mv": 173772479959,
     "market": "sh",
     "hold_price": 55.397,
     "sell_price": 66.4764
+  },
+  {
+    "code": "002475",
+    "name": "立讯精密",
+    "market": "sz",
+    "hold_price": 0.0,
+    "sell_price": 0.0
+  },
+  {
+    "code": "600276",
+    "name": "恒瑞医药",
+    "market": "sh",
+    "hold_price": 0.0,
+    "sell_price": 0.0
+  },
+  {
+    "code": "600529",
+    "name": "山东药玻",
+    "market": "sh",
+    "hold_price": 0.0,
+    "sell_price": 0.0
+  },
+  {
+    "code": "603259",
+    "name": "药明康德",
+    "market": "sh",
+    "hold_price": 0.0,
+    "sell_price": 0.0
+  },
+  {
+    "code": "600009",
+    "name": "上海机场",
+    "market": "sh",
+    "hold_price": 0.0,
+    "sell_price": 0.0
+  },
+  {
+    "code": "601318",
+    "name": "中国平安",
+    "market": "sh",
+    "hold_price": 0.0,
+    "sell_price": 0.0
+  },
+  {
+    "code": "601816",
+    "name": "京沪高铁",
+    "market": "sh",
+    "hold_price": 0.0,
+    "sell_price": 0.0
+  },
+  {
+    "code": "600036",
+    "name": "招商银行",
+    "market": "sh",
+    "hold_price": 0.0,
+    "sell_price": 0.0
   }
 ]

@@ -4,10 +4,11 @@ import smtplib
 from email.header import Header
 from email.mime.text import MIMEText
 from email.utils import formataddr
+from pathlib import Path
 
 from loguru import logger
 
-from settings import QQ_EMAIL, QQ_SMTP_SERVER, QQ_SMTP_PORT, QQ_AUTH_CODE
+from settings import QQ_EMAIL, QQ_SMTP_SERVER, QQ_SMTP_PORT, QQ_AUTH_CODE, DUMP_DIR
 
 
 def send_mail(subject="", content=""):
@@ -49,3 +50,15 @@ def dump_file(title="", content=""):
             logger.info("文件提醒生成成功！")
     except Exception as e:
         logger.error("文件提醒生成失败：", e)
+
+
+def clear_file():
+    """
+    清空 DUMP_DIR 目录下的 csv 文件和 log 文件
+    :return:
+    """
+    dump_dir = Path(DUMP_DIR)
+    for f in dump_dir.glob('*.csv'):
+        f.unlink()
+    # for f in dump_dir.glob('*.log'):
+    #     f.unlink()

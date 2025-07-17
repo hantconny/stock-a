@@ -10,9 +10,9 @@ import os.path
 import pandas as pd
 from loguru import logger
 
-from analyze.app import get_k_data, login, logout
+from analyze.historical_range import get_k_data, login, logout
 from settings import STOCK_CODE, STOCK_NAME, DUMP_DIR, TAKE_PROFIT
-from mystock.utils import send_mail, dump_file
+from util.utils import send_mail, dump_file
 
 # /home/rhino/s/a/notify_YYYY-MM-DD_HH-mm-ss_ssssss.log
 logger.add(os.path.join(DUMP_DIR, 'notify_{time:YYYYMMDD}.log'),

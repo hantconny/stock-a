@@ -1,5 +1,11 @@
 [
   {
+    "code": "600036",
+    "name": "招商银行",
+    "market": "sh",
+    "bid_price": 4.5
+  },
+  {
     "code": "600309",
     "name": "万华化学",
     "market": "sh",
@@ -9,72 +15,66 @@
     "code": "002475",
     "name": "立讯精密",
     "market": "sz",
-    "bid_price": 27.0
+    "bid_price": 0.0
   },
   {
     "code": "600276",
     "name": "恒瑞医药",
     "market": "sh",
-    "bid_price": 33.0
+    "bid_price": 0.0
   },
   {
     "code": "603259",
     "name": "药明康德",
     "market": "sh",
-    "bid_price": 86.0
+    "bid_price": 0.0
   },
   {
     "code": "601398",
     "name": "工商银行",
     "market": "sh",
-    "bid_price": 4.5
-  },
-  {
-    "code": "600036",
-    "name": "招商银行",
-    "market": "sh",
-    "bid_price": 33.5
+    "bid_price": 0.0
   },
   {
     "code": "600009",
     "name": "上海机场",
     "market": "sh",
-    "bid_price": 31.0
+    "bid_price": 0.0
   },
   {
     "code": "600900",
     "name": "长江电力",
     "market": "sh",
-    "bid_price": 16.0
+    "bid_price": 0.0
   },
   {
     "code": "601318",
     "name": "中国平安",
     "market": "sh",
-    "bid_price": 39.0
+    "bid_price": 0.0
   },
   {
     "code": "601816",
     "name": "京沪高铁",
     "market": "sh",
-    "bid_price": 4.5
+    "bid_price": 0.0
   },
   {
     "code": "601865",
     "name": "福莱特",
     "market": "sh",
-    "bid_price": 10.5
+    "bid_price": 0.0
   },
   {
     "code": "600660",
     "name": "福耀玻璃",
     "market": "sh",
-    "bid_price": 20.0
+    "bid_price": 0.0
   },
   {
     "code": "603605",
     "name": "珀莱雅",
     "market": "sh",
-    "bid_price": 60.0
+    "bid_price": 0.0
   }
 ]
