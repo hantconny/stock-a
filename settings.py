@@ -39,6 +39,11 @@ BID_PRICE = 35.36
 # 上涨 20% 卖出
 TAKE_PROFIT = 1.2
 
+# 是否启用文件提醒
+ENABLE_FILE_NOTIFY = False
+
+# 是否启用邮件提醒
+ENABLE_MAIL_NOTIFY = True
 # QQ 邮箱的 SMTP 服务器地址
 QQ_SMTP_SERVER = "smtp.qq.com"
 # QQ 邮箱的 SMTP 服务器端口

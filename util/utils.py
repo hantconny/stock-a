@@ -8,7 +8,8 @@ from pathlib import Path
 
 from loguru import logger
 
-from settings import QQ_EMAIL, QQ_SMTP_SERVER, QQ_SMTP_PORT, QQ_AUTH_CODE, DUMP_DIR
+from settings import QQ_EMAIL, QQ_SMTP_SERVER, QQ_SMTP_PORT, QQ_AUTH_CODE, DUMP_DIR, ENABLE_MAIL_NOTIFY, \
+    ENABLE_FILE_NOTIFY
 
 
 def send_mail(subject="", content=""):
@@ -18,6 +19,10 @@ def send_mail(subject="", content=""):
     :param content:
     :return:
     """
+    if not ENABLE_MAIL_NOTIFY:
+        logger.warning("邮件提醒未启用！")
+        return
+
     # 构建 MIME 邮件对象
     msg = MIMEText(content, "plain", "utf-8")
     msg["From"] = formataddr((str(Header("自己", "utf-8")), QQ_EMAIL))
@@ -42,6 +47,10 @@ def dump_file(title="", content=""):
     :param content:
     :return:
     """
+    if not ENABLE_FILE_NOTIFY:
+        logger.warning("文件提醒未启用！")
+        return
+
     filepath = os.path.join(r"C:/Users/Administrator/Desktop", f"{title}.text")
 
     try:
