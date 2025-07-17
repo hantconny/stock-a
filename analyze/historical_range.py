@@ -1,4 +1,14 @@
 # -*- coding:utf-8 -*-
+"""
+从 top.json 文件读取市值 2000 亿附近的证券代码作为自选
+根据 settings.py 中配置的起始时间，回溯每日收盘价格
+找出
+- 停留时间最多的区间
+- 覆盖70%时间的“价值区间”
+- 当前价格在历史分布的百分位
+- 模拟 停留时间最多的区间 的最低价买入，回溯收益和回撤
+- 模拟 覆盖70%时间的“价值区间” 的最低价买入，回溯收益和回撤
+"""
 import json
 import os
 import time
@@ -10,14 +20,14 @@ import pandas as pd
 from loguru import logger
 from matplotlib import pyplot as plt
 
-from mystock.backtrader import get_return
-from mystock.settings import START_DATE, DUMP_DIR, STOCK_CODE, STOCK_NAME, PLOT
+from analyze.backtrader import get_return
+from settings import START_DATE, DUMP_DIR, STOCK_CODE, STOCK_NAME, PLOT
 
 matplotlib.rcParams['font.sans-serif'] = ['SimHei']  # 设置中文字体
 matplotlib.rcParams['axes.unicode_minus'] = False  # 正常显示负号
 
-# /home/rhino/s/a/_YYYY-MM-DD_HH-mm-ss_ssssss.log
-logger.add(os.path.join(DUMP_DIR, '_{time:YYYYMMDD}.log'),
+# /home/rhino/s/a/app_YYYY-MM-DD_HH-mm-ss_ssssss.log
+logger.add(os.path.join(DUMP_DIR, 'app_{time:YYYYMMDD}.log'),
            rotation="50 MB",
            retention="3 days",
            compression="gz",
@@ -130,7 +140,7 @@ def get_distribution(stock_code=STOCK_CODE, stock_name=STOCK_NAME):
 
 
 def get_top_100_companies():
-    with open('top.json', encoding='utf-8') as f:
+    with open('../json/top.json', encoding='utf-8') as f:
         return json.loads(f.read())
 
 
@@ -153,19 +163,19 @@ def logout():
 if __name__ == '__main__':
     login()
 
-    # cs = get_top_100_companies()
-    #
-    # for comp in cs:
-    #     cs_code = comp.get('code')
-    #     cs_name = comp.get('name')
-    #     cs_mkt = comp.get('market')
-    #
-    #     get_k_data(f"{cs_mkt}.{cs_code}", cs_name)
-    #     get_distribution(f"{cs_mkt}.{cs_code}", cs_name)
-    #
-    #     time.sleep(10)
+    cs = get_top_100_companies()
 
-    get_k_data()
-    get_distribution()
+    for comp in cs:
+        cs_code = comp.get('code')
+        cs_name = comp.get('name')
+        cs_mkt = comp.get('market')
+
+        get_k_data(f"{cs_mkt}.{cs_code}", cs_name)
+        get_distribution(f"{cs_mkt}.{cs_code}", cs_name)
+
+        time.sleep(10)
+
+    # get_k_data()
+    # get_distribution()
 
     logout()

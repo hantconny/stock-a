@@ -33,4 +33,13 @@ STOCK_NAME = "立讯精密"
 BID_PRICE = 35.36
 
 # 上涨 20% 卖出
-SELL_RATE = 1.2
+TAKE_PROFIT = 1.2
+
+# QQ 邮箱的 SMTP 服务器地址
+QQ_SMTP_SERVER = "smtp.qq.com"
+# QQ 邮箱的 SMTP 服务器端口
+QQ_SMTP_PORT = 465
+# QQ 邮箱，正式部署需要切换成专用的 QQ 邮箱
+QQ_EMAIL = "405762304@qq.com"
+# QQ 邮箱授权码，正式部署需要切换成专用 QQ 邮箱的授权码
+QQ_AUTH_CODE = "dcfunepdqfgjbggh"

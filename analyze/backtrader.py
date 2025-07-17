@@ -1,19 +1,23 @@
 # -*- coding:utf-8 -*-
+"""
+策略回溯
+- 个股盈利 20% 即卖出
+根据 settings.py 中配置的起始时间，回溯个股在该策略下的收益和回撤情况
+"""
 import os.path
 
-import akshare as ak
 import matplotlib
 import matplotlib.pyplot as plt
 import pandas as pd
 from loguru import logger
 
-from mystock.settings import START_DATE, DUMP_DIR, STOCK_CODE, STOCK_NAME, BID_PRICE, SELL_RATE, PLOT
+from settings import START_DATE, DUMP_DIR, STOCK_CODE, STOCK_NAME, BID_PRICE, TAKE_PROFIT, PLOT
 
 matplotlib.rcParams['font.sans-serif'] = ['SimHei']  # 设置中文字体
 matplotlib.rcParams['axes.unicode_minus'] = False  # 正常显示负号
 
-# /home/rhino/s/a/_YYYY-MM-DD_HH-mm-ss_ssssss.log
-logger.add(os.path.join(DUMP_DIR, '_{time:YYYYMMDD}.log'),
+# /home/rhino/s/a/backtrader_YYYY-MM-DD_HH-mm-ss_ssssss.log
+logger.add(os.path.join(DUMP_DIR, 'backtrader_{time:YYYYMMDD}.log'),
            rotation="50 MB",
            retention="3 days",
            compression="gz",
@@ -32,13 +36,16 @@ def get_max_drawdown(equity_series):
     return max_dd
 
 
-def get_return(stock_code=STOCK_CODE, stock_name=STOCK_NAME, bid_price=BID_PRICE):
-    # # 1. 获取万华化学的历史数据（前复权）
+def get_return(stock_code=STOCK_CODE,
+               stock_name=STOCK_NAME,
+               bid_price=BID_PRICE,
+               start_date=START_DATE):
+    # 1. 获取万华化学的历史数据（前复权）
     df = pd.read_csv(f"{os.path.join(DUMP_DIR, stock_code)}_{stock_name}.csv")
     df.set_index("date", inplace=True)
 
     # 2. 筛选 2018-01-01 以后的数据
-    df = df[df.index >= START_DATE]
+    df = df[df.index >= start_date]
 
     # 3. 初始化变量
     equity_curve = []
@@ -63,7 +70,7 @@ def get_return(stock_code=STOCK_CODE, stock_name=STOCK_NAME, bid_price=BID_PRICE
                 hold_days = 1
         else:
             hold_days += 1
-            if price >= buy_price * SELL_RATE:
+            if price >= buy_price * TAKE_PROFIT:
                 sell_price = price
                 sell_date = current_date
                 capital *= sell_price / buy_price
@@ -85,10 +92,6 @@ def get_return(stock_code=STOCK_CODE, stock_name=STOCK_NAME, bid_price=BID_PRICE
         equity_curve.append(capital if not holding else capital * price / buy_price)
     df["equity"] = equity_curve
 
-    # 打印买入卖出时间，买入卖出价格，持仓天数
-    trades_df = pd.DataFrame(trades)
-    print(trades_df)
-
     if PLOT:
         # 5. 可视化
         df[["close", "equity"]].plot(figsize=(12, 6))
@@ -104,10 +107,14 @@ def get_return(stock_code=STOCK_CODE, stock_name=STOCK_NAME, bid_price=BID_PRICE
     annual_return = (df["equity"].iloc[-1]) ** (252 / trading_days) - 1
     max_drawdown = get_max_drawdown(df["equity"])
     # 输出指标
-    logger.info(f"买入价：{bid_price}，"
+    logger.info(f"目标买入价：{bid_price}，"
                 f"总收益率: {total_return:.2%}，"
                 f"年化收益率: {annual_return:.2%}，"
                 f"最大回撤: {max_drawdown:.2%}")
+
+    # 打印买入卖出时间，买入卖出价格，持仓天数
+    trades_df = pd.DataFrame(trades)
+    print(trades_df)
 
 
 if __name__ == '__main__':
