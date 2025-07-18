@@ -56,3 +56,6 @@ QQ_SMTP_PORT = 465
 QQ_EMAIL = "405762304@qq.com"
 # QQ 邮箱授权码，正式部署需要切换成专用 QQ 邮箱的授权码
 QQ_AUTH_CODE = "dcfunepdqfgjbggh"
+
+# 收信邮箱
+ICLOUD_EMAIL = "caizheng.x@icloud.com"
