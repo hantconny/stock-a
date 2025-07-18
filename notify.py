@@ -10,7 +10,7 @@ import os.path
 import pandas as pd
 from loguru import logger
 
-from historical_range import get_k_data, login, logout
+from historical_range import get_k_data
 from settings import STOCK_CODE, STOCK_NAME, DUMP_DIR, TAKE_PROFIT
 from utils import send_mail, dump_file
 
@@ -87,8 +87,6 @@ def get_bid_notify(_stock_code=STOCK_CODE, _stock_name=STOCK_NAME, _bid_price=0.
 
 
 if __name__ == '__main__':
-    login()
-
     # 持仓卖出
     positions = get_position()
 
@@ -112,5 +110,3 @@ if __name__ == '__main__':
 
         get_k_data(f"{watch_mkt}.{watch_code}", watch_name)
         get_bid_notify(f"{watch_mkt}.{watch_code}", watch_name, watch_price)
-
-    logout()

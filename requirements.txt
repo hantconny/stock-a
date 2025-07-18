@@ -1,3 +1,4 @@
+akshare
 baostock
 loguru
 matplotlib

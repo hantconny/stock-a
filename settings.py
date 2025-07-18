@@ -1,9 +1,13 @@
 # -*- coding:utf-8 -*-
 import os
+import time
 
 DUMP_DIR = '/home/rhino/s/a'
 if not os.path.exists(DUMP_DIR):
     os.makedirs(DUMP_DIR)
+
+# 2025-07-17
+TODAY = time.strftime('%Y-%m-%d', time.localtime())
 
 # 是否生成图表
 PLOT = False

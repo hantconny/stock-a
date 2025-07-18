@@ -9,7 +9,7 @@ from pathlib import Path
 from loguru import logger
 
 from settings import QQ_EMAIL, QQ_SMTP_SERVER, QQ_SMTP_PORT, QQ_AUTH_CODE, DUMP_DIR, ENABLE_MAIL_NOTIFY, \
-    ENABLE_FILE_NOTIFY
+    ENABLE_FILE_NOTIFY, SAVE_DATA
 
 
 def send_mail(subject="", content=""):
@@ -66,8 +66,14 @@ def clear_file():
     清空 DUMP_DIR 目录下的 csv 文件和 log 文件
     :return:
     """
+    # 如果需要留存数据，则不清理 csv 文件
+    if SAVE_DATA:
+        return
+
     dump_dir = Path(DUMP_DIR)
+
     for f in dump_dir.glob('*.csv'):
         f.unlink()
+
     # for f in dump_dir.glob('*.log'):
     #     f.unlink()
