@@ -12,7 +12,7 @@ from loguru import logger
 
 from historical_range import get_k_data
 from settings import STOCK_CODE, STOCK_NAME, DUMP_DIR, TAKE_PROFIT
-from utils import send_mail, dump_file
+from utils import send_mail, dump_file, clear_file
 
 # /home/rhino/s/a/notify_YYYY-MM-DD_HH-mm-ss_ssssss.log
 logger.add(os.path.join(DUMP_DIR, 'notify_{time:YYYYMMDD}.log'),
@@ -110,3 +110,5 @@ if __name__ == '__main__':
 
         get_k_data(f"{watch_code}", watch_name)
         get_bid_notify(f"{watch_code}", watch_name, watch_price)
+
+    clear_file()

@@ -22,7 +22,7 @@ from matplotlib import pyplot as plt
 
 import json
 from backtrader import get_return
-from settings import START_DATE, DUMP_DIR, STOCK_CODE, STOCK_NAME, PLOT, SAVE_DATA, TODAY
+from settings import START_DATE, DUMP_DIR, STOCK_CODE, STOCK_NAME, PLOT, TODAY
 from utils import clear_file
 
 matplotlib.rcParams['font.sans-serif'] = ['SimHei']  # 设置中文字体
@@ -144,3 +144,5 @@ if __name__ == '__main__':
     # 利用 settings.py 中的默认配置评估单个证券
     # get_k_data()
     # get_distribution()
+
+    clear_file()
