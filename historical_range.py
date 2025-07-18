@@ -134,7 +134,7 @@ if __name__ == '__main__':
     for comp in cs:
         cs_code = comp.get('code')
         cs_name = comp.get('name')
-        cs_mkt = comp.get('market')
+        # cs_mkt = comp.get('market')
 
         get_k_data(f"{cs_code}", cs_name)
         get_distribution(f"{cs_code}", cs_name)

@@ -1,5 +1,19 @@
 [
   {
+    "code": "512880",
+    "name": "证券ETF",
+    "market": "sh",
+    "hold_price": 1.244,
+    "sell_price": 0.0
+  },
+  {
+    "code": "588000",
+    "name": "科创50",
+    "market": "sh",
+    "hold_price": 1.121,
+    "sell_price": 0.0
+  },
+  {
     "code": "600309",
     "name": "万华化学",
     "market": "sh",

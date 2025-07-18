@@ -93,11 +93,11 @@ if __name__ == '__main__':
     for hold in positions:
         hold_code = hold.get('code')
         hold_name = hold.get('name')
-        hold_mkt = hold.get('market')
+        # hold_mkt = hold.get('market')
         hold_price = hold.get('hold_price')
 
-        get_k_data(f"{hold_mkt}.{hold_code}", hold_name)
-        get_sell_notify(f"{hold_mkt}.{hold_code}", hold_name, hold_price)
+        get_k_data(f"{hold_code}", hold_name)
+        get_sell_notify(f"{hold_code}", hold_name, hold_price)
 
     # 自选买入
     watchlist = get_watchlist()
@@ -105,8 +105,8 @@ if __name__ == '__main__':
     for watch in watchlist:
         watch_code = watch.get('code')
         watch_name = watch.get('name')
-        watch_mkt = watch.get('market')
+        # watch_mkt = watch.get('market')
         watch_price = watch.get('bid_price')
 
-        get_k_data(f"{watch_mkt}.{watch_code}", watch_name)
-        get_bid_notify(f"{watch_mkt}.{watch_code}", watch_name, watch_price)
+        get_k_data(f"{watch_code}", watch_name)
+        get_bid_notify(f"{watch_code}", watch_name, watch_price)
