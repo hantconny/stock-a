@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 """
-从 backtrader.json 文件读取需要分析的证券代码（个股或 ETF）
-走 akshare 的东财接口获取历史交易数据，vpn 下东财会断连，需使用国内网络
+从 backtrader.json 文件读取需要分析的个股证券代码
 根据 settings.py 中配置的起始时间，回溯每日收盘价格
 找出
 - 停留时间最多的区间
@@ -9,20 +8,22 @@
 - 当前价格在历史分布的百分位
 - 模拟 停留时间最多的区间 的最低价买入，回溯收益和回撤
 - 模拟 覆盖70%时间的“价值区间” 的最低价买入，回溯收益和回撤
+
+@deprecated 由于 baostock 不支持分析 ETF，改用 akshare 从东财获取
 """
+import json
 import os
 import time
 
-import akshare as ak
+import baostock as bs
 import matplotlib
 import numpy as np
 import pandas as pd
 from loguru import logger
 from matplotlib import pyplot as plt
 
-import json
 from backtrader import get_return
-from settings import START_DATE, DUMP_DIR, STOCK_CODE, STOCK_NAME, PLOT, SAVE_DATA, TODAY
+from settings import START_DATE, DUMP_DIR, STOCK_CODE, STOCK_NAME, PLOT, SAVE_DATA
 from utils import clear_file
 
 matplotlib.rcParams['font.sans-serif'] = ['SimHei']  # 设置中文字体
@@ -39,19 +40,41 @@ logger.add(os.path.join(DUMP_DIR, 'app_{time:YYYYMMDD}.log'),
 def get_k_data(stock_code=STOCK_CODE, stock_name=STOCK_NAME):
     """
     获取从 2018-01-01 到昨天的历史交易日数据
-    :param stock_code: 如 588000 或 601398
-    :param stock_name: 如 科创50 或 工商银行
+    :param stock_code: sh.601398
+    :param stock_name: 工商银行
     :return:
     """
-    df = ak.fund_etf_hist_em(symbol=stock_code,
-                             start_date=START_DATE.replace('-', ''),
-                             end_date=TODAY.replace('-', ''),
-                             period="daily",
-                             adjust="qfq")
+    rs = bs.query_history_k_data_plus(stock_code,
+                                      "date,code,high,low,open,close",
+                                      start_date=START_DATE, end_date=None,
+                                      frequency="d", adjustflag="3")
 
-    df = df.rename(columns={"收盘": "close", "日期": "date"})
+    # 转换为 DataFrame
+    data_list = []
+    while (rs.error_code == '0') & rs.next():
+        data_list.append(rs.get_row_data())
+    df = pd.DataFrame(data_list, columns=rs.fields)
 
     df.to_csv(f"{os.path.join(DUMP_DIR, stock_code)}_{stock_name}.csv")
+
+    # # 转换数据类型（high 和 low 默认为字符串，需要转成 float 才能比较）
+    # df["high"] = df["high"].astype(float)
+    # df["low"] = df["low"].astype(float)
+    #
+    # max_high_row = df.loc[df["high"].idxmax()]
+    # min_low_row = df.loc[df["low"].idxmin()]
+    #
+    # print(f"最高价: {max_high_row['high']}，日期: {max_high_row['date']}")
+    # print(f"最低价: {min_low_row['low']}，日期: {min_low_row['date']}")
+    #
+    # # akshare 的接口太慢了，走网络从东财实时获取
+    # df = ak.stock_zh_a_hist(symbol=stock_code,
+    #                         period="daily",
+    #                         start_date="20180101",
+    #                         # end_date="20250714",
+    #                         adjust="qfq")  # 前复权
+    #
+    # df.to_csv(f"{os.path.join(DUMP_DIR, stock_code)}_{stock_name}.csv")
 
 
 def get_distribution(stock_code=STOCK_CODE, stock_name=STOCK_NAME):
@@ -119,28 +142,50 @@ def get_distribution(stock_code=STOCK_CODE, stock_name=STOCK_NAME):
         plt.show()
 
 
-def get_stocks():
+def get_review_companies():
     """
     读取需要评估的证券信息
     :return:
     """
-    with open('json/backtrader.json', encoding='utf-8') as f:
+    with open('../json/backtrader.json', encoding='utf-8') as f:
         return json.loads(f.read())
 
 
+def login():
+    """
+    登入
+    :return:
+    """
+    bs.login()
+
+
+def logout():
+    """
+    登出
+    :return:
+    """
+    bs.logout()
+
+    if not SAVE_DATA:
+        clear_file()
+
+
 if __name__ == '__main__':
-    cs = get_stocks()
+    login()
+
+    cs = get_review_companies()
 
     for comp in cs:
         cs_code = comp.get('code')
         cs_name = comp.get('name')
         cs_mkt = comp.get('market')
 
-        get_k_data(f"{cs_code}", cs_name)
-        get_distribution(f"{cs_code}", cs_name)
+        get_k_data(f"{cs_mkt}.{cs_code}", cs_name)
+        get_distribution(f"{cs_mkt}.{cs_code}", cs_name)
 
         time.sleep(10)
 
-    # 利用 settings.py 中的默认配置评估单个证券
     # get_k_data()
     # get_distribution()
+
+    logout()
